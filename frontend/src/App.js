@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // import Auth from './containers/Auth/Auth'
@@ -52,17 +52,18 @@ const App = props => {
   }, [onTryAutoSignup])
 
   let routes = (
-    <Switch>
-      <Route path="/shop" render={(props) => <Shop {...props} />} />
-      <Route path="/products/:productId" render={(props) => <SingleProduct {...props} />} />
-      <Route path="/auth" render={(props) => <Auth {...props} />} />
-      <Route path="/" exact component={MainPage} />
-      <Redirect to="/" />
-    </Switch>
+    <Routes>
+      
+        <Route path="/shop" element={<Shop {...props} />} />
+        <Route path="/products/:productId" element={<SingleProduct {...props} />} />
+        <Route path="/auth" element={<Auth {...props} />} />
+        <Route path="/"  element={<MainPage/>} />
+        {/* <Navigate to="/" /> */}
+    </Routes>
   )
   if (props.isAuthenticated) {
     routes = (
-      <Switch>
+      <Routes>
         {/* <Route path="/checkout" render={(props) => <Checkout {...props} />} /> */}
         {/* <Route path="/orders" render={(props) => <Orders {...props} />} /> */}
         <Route path="/logout" component={Logout} />
@@ -76,8 +77,8 @@ const App = props => {
         <Route path="/admin/add-product" render={(props) => <AddProduct {...props} />} />
         <Route path="/admin" exact render={(props) => <Admin {...props} />} />
         <Route path="/" exact component={MainPage} />
-        <Redirect to="/" />
-      </Switch>
+        <Navigate to="/" />
+      </Routes>
     )
   }
   return (
@@ -101,4 +102,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default (connect(mapStateToProps, mapDispatchToProps)(App));

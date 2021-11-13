@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { updateObject, checkValidity } from '../../shared/utility'
 import Input from '../../components/UI/Input/Input'
@@ -151,7 +151,7 @@ const Auth = props => {
 
     let authRedirect = null
     if (props.isAuthenticated) {
-        authRedirect = <Redirect to={authRedirectPath} />
+        authRedirect = <Navigate to={authRedirectPath} />
     }
 
     return (

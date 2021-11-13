@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from './CheckoutForm/CheckoutForm'
@@ -24,7 +24,7 @@ const Checkout = props => {
 
     let purchasedRedirect = null
     if (purchased) {
-        purchasedRedirect = <Redirect to="/orders" />
+        purchasedRedirect = <Navigate to="/orders" />
     }
 
     let totalPrice = 0

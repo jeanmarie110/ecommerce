@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import Input from '../../../components/UI/Input/Input'
@@ -111,7 +111,7 @@ const AddProduct = (props) => {
     }
 
     if (props.productAdded) {
-        addProductRedirect = <Redirect to={props.adminRedirectPath} />
+        addProductRedirect = <Navigate to={props.adminRedirectPath} />
     }
 
     const formElementsArray = []
