@@ -28,32 +28,32 @@ spec:
                 secretKeyRef:
                   name: stripe-secret-key
                   key: STRIPE_SECRET_KEY
-            - name: DB_USER
-              value: root
-            - name: DB_HOST
-              value: mysql-clusterip-srv
-            - name: DB_PORT
-              value: "3306"
-            - name: DB_DATABASE
-              value: ecommerce
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-password
-                  key: MYSQL_ROOT_PASSWORD
             # - name: DB_USER
-            #   value: postgres
+            #   value: root
             # - name: DB_HOST
-            #   value: postgres-clusterip-srv
+            #   value: mysql-clusterip-srv
             # - name: DB_PORT
-            #   value: "5432"
+            #   value: "3306"
             # - name: DB_DATABASE
-            #   value: postgres
-            # - name: POSTGRES_PASSWORD
+            #   value: ecommerce
+            # - name: MYSQL_ROOT_PASSWORD
             #   valueFrom:
             #     secretKeyRef:
-            #       name: pgpassword
-            #       key: POSTGRES_PASSWORD
+            #       name: mysql-password
+            #       key: MYSQL_ROOT_PASSWORD
+            - name: DB_USER
+              value: postgres
+            - name: DB_HOST
+              value: postgres-clusterip-srv
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_DATABASE
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: POSTGRES_PASSWORD
 
 ---
 apiVersion: v1
