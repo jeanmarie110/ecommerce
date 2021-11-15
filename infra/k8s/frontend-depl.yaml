@@ -15,7 +15,7 @@ spec:
       containers:
         - name: frontend
           # image: jared0306/frontend
-          image: public.ecr.aws/l5h0a1q6/ecommerce-frontend
+          image: public.ecr.aws/l5h0a1q6/ecommerce-frontend:latest
           ports:
             - containerPort: 3000
 ---
