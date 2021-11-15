@@ -9,7 +9,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: 108814617702.dkr.ecr.us-east-1.amazonaws.com/ecommerce-backend
+    - image: public.ecr.aws/l5h0a1q6/ecommerce-backend
       context: backend
       docker:
         dockerfile: Dockerfile.dev
@@ -17,7 +17,7 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    - image: 108814617702.dkr.ecr.us-east-1.amazonaws.com/ecommerce-frontend
+    - image: public.ecr.aws/l5h0a1q6/ecommerce-frontend
       context: frontend
       docker:
         dockerfile: Dockerfile.dev
