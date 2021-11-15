@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: jared0306/backend
+          image: public.ecr.aws/l5h0a1q6/ecommerce-backend
           ports:
             - containerPort: 8080
           env:
