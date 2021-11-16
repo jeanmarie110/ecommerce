@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
-// const mysql = require("mysql2/promise");
-const { Pool } = require('pg');
+const mysql = require("mysql2/promise");
+// const { Pool } = require('pg');
 
 module.exports = db = {};
 
@@ -8,17 +8,17 @@ const initialize = async () => {
     const host = process.env.DB_HOST;
     const port = process.env.DB_PORT;
     const user = process.env.DB_USER;
-    const password = process.env.POSTGRES_PASSWORD;
-    // const password = process.env.MYSQL_ROOT_PASSWORD;
+    // const password = process.env.POSTGRES_PASSWORD;
+    const password = process.env.MYSQL_ROOT_PASSWORD;
     const database = process.env.DB_DATABASE;
 
-    const pgPool = new Pool({
-        user: user,
-        host: host,
-        database: database,
-        password: password,
-        port: port
-    });
+    // const pgPool = new Pool({
+    //     user: user,
+    //     host: host,
+    //     database: database,
+    //     password: password,
+    //     port: port
+    // });
 
     const wait = (ms) => {
         return new Promise((resolve) => {
@@ -27,12 +27,12 @@ const initialize = async () => {
     }
     let second = 10;
     let retryTime = 10;
-    // let connection;
+    let connection;
     for (let i = 0; i < retryTime; ++i) {
         try {
-            await pgPool.connect();
-            // connection = await mysql.createConnection({ host: host, port: port, user: user, password: password });
-            // await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
+            // await pgPool.connect();
+            connection = await mysql.createConnection({ host: host, port: port, user: user, password: password });
+            await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
             break;
         } catch (err) {
             console.log(`[${i + 1}/${retryTime}] Database not ready yet, wait for ${second} seconds`);
@@ -42,8 +42,8 @@ const initialize = async () => {
     console.log('connected to Database!');
 
     const sequelize = new Sequelize(database, user, password, {
-        // dialect: "mysql",
-        dialect: "postgres",
+        dialect: "mysql",
+        // dialect: "postgres",
         host: host
     });
 

@@ -39,7 +39,7 @@ app.use((error, req, res, next) => {
     try {
         await db.initialize();
         app.listen(PORT, () => {
-            console.log('😎😎 server listening to port ' + PORT);
+            console.log('😎 server listening to port ' + PORT);
         })
     } catch (err) {
         console.log(err);
