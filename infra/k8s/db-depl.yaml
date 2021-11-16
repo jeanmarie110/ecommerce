@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: mysql
+  template:
+    metadata:
+      labels:
+        component: mysql
+    spec:
+      volumes:
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+      containers:
+        - name: mysql
+          image: mysql
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+              subPath: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-password
+                  key: MYSQL_ROOT_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    component: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: db-depl
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       component: postgres
+#   template:
+#     metadata:
+#       labels:
+#         component: postgres
+#     spec:
+#       volumes:
+#         - name: postgres-storage
+#           persistentVolumeClaim:
+#             claimName: database-persistent-volume-claim
+#       containers:
+#         - name: postgres
+#           image: postgres
+#           ports:
+#             - containerPort: 5432
+#           volumeMounts:
+#             - name: postgres-storage
+#               mountPath: /var/lib/postgresql/data
+#               subPath: postgres
+#           env:
+#             - name: POSTGRES_PASSWORD
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: pgpassword
+#                   key: POSTGRES_PASSWORD
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: postgres-clusterip-srv
+# spec:
+#   type: ClusterIP
+#   selector:
+#     component: postgres
+#   ports:
+#     - port: 5432
+#       targetPort: 5432
