@@ -3,7 +3,7 @@
 A fullstack eCommerce website built with MySQL/PostgresQL, Express, React, and Redux. Services are containerized with Docker, managed by Kubernetes, and deployed to AWS with Github Actions CD pipeline. It also Integrated Stripe payment gateway.
 
 <p align="center">
-    <img src="https://i.imgur.com/HtiBX6z.jpg" />
+    <img src="https://i.imgur.com/gA36oBL.jpg" />
 </p>
 
 ## Entity Relationship Diagram (ERD)
