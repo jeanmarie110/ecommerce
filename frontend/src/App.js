@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // import Auth from './containers/Auth/Auth'
@@ -52,33 +52,34 @@ const App = props => {
   }, [onTryAutoSignup])
 
   let routes = (
-    <Routes>
-      
+    <React.Fragment>
+      <Routes>
         <Route path="/shop" element={<Shop {...props} />} />
         <Route path="/products/:productId" element={<SingleProduct {...props} />} />
         <Route path="/auth" element={<Auth {...props} />} />
-        <Route path="/"  element={<MainPage/>} />
+        <Route path="/" element={<MainPage />} />
         {/* <Navigate to="/" /> */}
-    </Routes>
+      </Routes>
+    </React.Fragment>
   )
   if (props.isAuthenticated) {
     routes = (
-      <Routes>
-        {/* <Route path="/checkout" render={(props) => <Checkout {...props} />} /> */}
-        {/* <Route path="/orders" render={(props) => <Orders {...props} />} /> */}
-        <Route path="/logout" component={Logout} />
-        <Route path="/auth" render={(props) => <Auth {...props} />} />
-        <Route path="/shop" render={(props) => <Shop {...props} />} />
-        <Route path="/cart" render={(props) => <Cart {...props} />} />
-        <Route path="/checkout" render={(props) => <Checkout {...props} />} />
-        <Route path="/orders" render={(props) => <Orders {...props} />} />
-        <Route path="/products/:productId/edit" render={(props) => <EditProduct {...props} />} />
-        <Route path="/products/:productId" render={(props) => <SingleProduct {...props} />} />
-        <Route path="/admin/add-product" render={(props) => <AddProduct {...props} />} />
-        <Route path="/admin" exact render={(props) => <Admin {...props} />} />
-        <Route path="/" exact component={MainPage} />
-        <Navigate to="/" />
-      </Routes>
+        <Routes>
+          {/* <Route path="/checkout" render={(props) => <Checkout {...props} />} /> */}
+          {/* <Route path="/orders" render={(props) => <Orders {...props} />} /> */}
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/products/:productId/edit" element={<EditProduct />} />
+          <Route path="/products/:productId" element={<SingleProduct />} />
+          <Route path="/admin/add-product" element={<AddProduct />} />
+          <Route path="/admin" exact element={<Admin />} />
+          <Route path="/" exact element={<MainPage />} />
+          {/* <Navigate to="/" /> */}
+        </Routes>
     )
   }
   return (
