@@ -1,21 +1,34 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx
+---
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
   annotations:
-    kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
+  ingressClassName: nginx
   rules:
     - host: ecommerce-fullstack.com
       http:
         paths:
           - path: /?(.*)
+            pathType: Prefix
             backend:
-              serviceName: frontend-srv
-              servicePort: 3000
+              service:
+                name: frontend-srv
+                port:
+                  number: 3000
           - path: /api/?(.*)
+            pathType: Prefix
             backend:
-              serviceName: backend-srv
-              servicePort: 8080
+              service:
+                name: backend-srv
+                port:
+                  number: 8080
