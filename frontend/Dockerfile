@@ -8,11 +8,10 @@ COPY . .
 RUN yarn build
 RUN npm prune --production
 RUN /usr/local/bin/node-prune
-RUN yarn add serve
 
 FROM node:12-alpine
 COPY --from=BUILD_IMAGE /app .
 COPY --from=BUILD_IMAGE /app/node_modules ./node_modules
-# CMD [ "node", "./dist/main.js" ]
 
+RUN yarn global add serve
 CMD serve -s build
