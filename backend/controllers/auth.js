@@ -1,8 +1,8 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-// const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const db = require('../database/db');
 
@@ -29,13 +29,14 @@ exports.signup = async (req, res, next) => {
         res.status(201).json({
             message: 'Signup succeeded!'
         });
-        // const msg = {
-        //     to: email,
-        //     from: process.env.SENDGRID_EMAIL,
-        //     subject: '[ecommerce] Signup succeeded!',
-        //     html: '<h1>You successfully signed up!</h1>'
-        // };
-        // sgMail.send(msg);
+        // TODO: use message queue to handle email event
+        const msg = {
+            to: email,
+            from: process.env.SENDGRID_EMAIL,
+            subject: '[ecommerce] Signup succeeded!',
+            html: '<h1>You successfully signed up!</h1>'
+        };
+        sgMail.send(msg);
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
